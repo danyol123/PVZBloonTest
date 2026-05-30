@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Raylib-cs" Version="7.0.2" />
+  </ItemGroup>
+
+  <!-- Exclude the legacy SplashKit wrapper from compilation -->
+  <ItemGroup>
+    <Compile Remove="lib\**" />
+  </ItemGroup>
+
+  <!-- Copy font to output directory -->
+  <ItemGroup>
+    <Content Include="fonts\Brianne_s_hand.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+</Project>
