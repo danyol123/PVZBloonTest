@@ -73,7 +73,7 @@ namespace PVZBloonTest.Plants
 
         private void FireRow(GameContext ctx, int row)
         {
-            ParticleManager.Instance.ProjectileHit(CenterX + 45f, CenterY);
+            ParticleManager.Instance.ProjectileHit(CenterX + 45f, CenterY - 10);
             for (int i = 0; i < _peaCount; i++)
                 ctx.Projectiles.Add(new Pea(row, CenterX + 45f + i * 40f, _damage, 1,
                     _isFire, HasCamoDetection, HasLeadDetection,

@@ -21,3 +21,4 @@ C:\msys64\home\Daniel\PVZBloonTest\obj\Debug\net10.0\PVZBloonTest.pdb
 C:\msys64\home\Daniel\PVZBloonTest\obj\Debug\net10.0\PVZBloonTest.genruntimeconfig.cache
 C:\msys64\home\Daniel\PVZBloonTest\obj\Debug\net10.0\ref\PVZBloonTest.dll
 C:\msys64\home\Daniel\PVZBloonTest\bin\Debug\net10.0\fonts\Brianne_s_hand.ttf
+C:\msys64\home\Daniel\PVZBloonTest\obj\Debug\net10.0\PVZBloonTest.sourcelink.json

@@ -29,7 +29,7 @@ what's missing at a glance. All images should use a **transparent background**.
 | `peashooter.png` | Peashooter at 0-0-0 |          DONE
 | `sunflower.png`  | Sunflower at 0-0-0 |       DONE
 | `wallnut.png`    | Wallnut at 0-0-0 | done
-| `cactus.png`     | Cactus at 0-0-0 |
+| `cactus.png`     | Cactus at 0-0-0 |  done
 
 ---
 
@@ -48,12 +48,12 @@ so they composite cleanly.
 | `sunflower_t1_0.png`  | Sunflower  | 0 | Faster Sun |     DONE
 | `sunflower_t1_1.png`  | Sunflower  | 1 | Supporting Growth |      DONE
 | `sunflower_t1_2.png`  | Sunflower  | 2 | Solar Power |      DONE
-| `wallnut_t1_0.png`    | Wallnut    | 0 | Tough-nut |
-| `wallnut_t1_1.png`    | Wallnut    | 1 | Endurian |
-| `wallnut_t1_2.png`    | Wallnut    | 2 | Explode-o-nut |
-| `cactus_t1_0.png`     | Cactus     | 0 | Heat-tipped Spikes |
-| `cactus_t1_1.png`     | Cactus     | 1 | Thorns |
-| `cactus_t1_2.png`     | Cactus     | 2 | Razor Sharp Spikes |
+| `wallnut_t1_0.png`    | Wallnut    | 0 | Tough-nut |  done
+| `wallnut_t1_1.png`    | Wallnut    | 1 | Endurian |   done
+| `wallnut_t1_2.png`    | Wallnut    | 2 | Explode-o-nut |  done
+| `cactus_t1_0.png`     | Cactus     | 0 | Heat-tipped Spikes | done
+| `cactus_t1_1.png`     | Cactus     | 1 | Thorns | done
+| `cactus_t1_2.png`     | Cactus     | 2 | Razor Sharp Spikes | done
 
 ---
 
@@ -115,15 +115,15 @@ upgrade combination. Draw the full plant art (not just an overlay).
 
 | File | T2 path | Crosspath | Description |
 |---|---|---|---|
-| `cactus_t2_0.png`    | 0 (Headshot!)           | — | |
-| `cactus_t2_0_x1.png` | 0 (Headshot!)           | 1 | |
-| `cactus_t2_0_x2.png` | 0 (Headshot!)           | 2 | |
-| `cactus_t2_1.png`    | 1 (Garden of Thorns)    | — | |
-| `cactus_t2_1_x0.png` | 1 (Garden of Thorns)    | 0 | |
-| `cactus_t2_1_x2.png` | 1 (Garden of Thorns)    | 2 | |
-| `cactus_t2_2.png`    | 2 (Super-Charged Spikes)| — | |
-| `cactus_t2_2_x0.png` | 2 (Super-Charged Spikes)| 0 | |
-| `cactus_t2_2_x1.png` | 2 (Super-Charged Spikes)| 1 | |
+| `cactus_t2_0.png`    | 0 (Headshot!)           | — | |    done
+| `cactus_t2_0_x1.png` | 0 (Headshot!)           | 1 | |    done
+| `cactus_t2_0_x2.png` | 0 (Headshot!)           | 2 | |    done
+| `cactus_t2_1.png`    | 1 (Garden of Thorns)    | — | |    done
+| `cactus_t2_1_x0.png` | 1 (Garden of Thorns)    | 0 | |    done
+| `cactus_t2_1_x2.png` | 1 (Garden of Thorns)    | 2 | |    done
+| `cactus_t2_2.png`    | 2 (Super-Charged Spikes)| — | |    done
+| `cactus_t2_2_x0.png` | 2 (Super-Charged Spikes)| 0 | |    done
+| `cactus_t2_2_x1.png` | 2 (Super-Charged Spikes)| 1 | |    done
 
 ---
 
@@ -134,7 +134,7 @@ upgrade combination. Draw the full plant art (not just an overlay).
 | `icon_peashooter.png` | 64×64 |       DONE
 | `icon_sunflower.png`  | 64×64 |   done
 | `icon_wallnut.png`    | 64×64 |   done
-| `icon_cactus.png`     | 64×64 |
+| `icon_cactus.png`     | 64×64 |   done
 
 ---
 
@@ -160,12 +160,12 @@ upgrade combination. Draw the full plant art (not just an overlay).
 |---|---|
 | `pea.png`          | 32×32 |      DONE
 | `pea_fire.png`     | 32×32 |        DONE
-| `pea_plasma.png`   | 32×32 |      Done      
-| `spike_normal.png` | 32×16 |          
-| `spike_heat.png`   | 32×16 |        
-| `spike_plasma.png` | 32×16 |      
-| `thorn_normal.png` | 32×16 |
-| `thorn_plasma.png` | 32×16 |
+| `pea_plasma.png`   | 32×32 |      DONE      
+| `spike_normal.png` | 32×16 |    done      
+| `spike_heat.png`   | 32×16 |        done
+| `spike_plasma.png` | 32×16 |      done
+| `thorn_normal.png` | 32×16 |  done
+| `thorn_plasma.png` | 32×16 |done
 | `sun_blast.png`    | 32×32 |  done
 | `sun_laser.png`    | 32×32 |  done
 

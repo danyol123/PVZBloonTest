@@ -1,5 +1,6 @@
 using Raylib_cs;
 using PVZBloonTest.Projectiles;
+using PVZBloonTest.Particles;
 
 namespace PVZBloonTest.Plants
 {
@@ -18,7 +19,7 @@ namespace PVZBloonTest.Plants
 
         private bool  _heat, _head, _thorns, _garden;
         private int   _extraPierce;
-        private float _spikeDmg = 5f, _spikeTimer, _thornTimer;
+        private float _spikeDmg = 5f, _spikeTimer = 4f, _thornTimer;
 
         public Cactus() { MaxHp = Hp = 10f; Block = 1; PlaceCooldown = 5f; }
 
@@ -41,10 +42,12 @@ namespace PVZBloonTest.Plants
             _spikeTimer += dt;
             if (_spikeTimer >= 6f)
             {
-                _spikeTimer = 0f;
-                if (FindTarget(ctx, HasCamoDetection, HasLeadDetection) != null)
-                    ctx.Projectiles.Add(new Spike(Row, CenterX, _spikeDmg, 1 + _extraPierce,
+                if (FindTarget(ctx, HasCamoDetection, HasLeadDetection) != null) {
+                    ParticleManager.Instance.ProjectileHit(CenterX + 45f, CenterY - 10);
+                    ctx.Projectiles.Add(new Spike(Row, CenterX + 45f, _spikeDmg, 1 + _extraPierce,
                         _heat, _head, HasCamoDetection));
+                    _spikeTimer = 0f;
+                } 
             }
 
             // ── Thorns melee attack ───────────────────────────────────
@@ -55,7 +58,7 @@ namespace PVZBloonTest.Plants
                 if (_thornTimer >= interval)
                 {
                     // Range 2 tiles; garden: 3 lanes, higher dmg and pierce
-                    float thornRange = 2f;
+                    float thornRange = 2.5f;
                     float dmg        = _garden ? 8f  : 2f;
                     int   pierce     = _garden ? 3   : 1;
                     int   lanes      = _garden ? 3   : 1;
@@ -77,7 +80,13 @@ namespace PVZBloonTest.Plants
                         }
                         if (hasTarget)
                         {
-                            ctx.Projectiles.Add(new Thorn(r, CenterX + 20, dmg, pierce, thornRange, _garden));
+                            if (_garden) {
+                                for (int rr = -1; rr <= 1; rr++) {
+                                    ctx.Projectiles.Add(new Thorn(Row + rr, CenterX + 20, dmg, pierce, thornRange, _garden, HasLeadDetection, HasCamoDetection)); 
+                                }
+                            } else {
+                                ctx.Projectiles.Add(new Thorn(Row, CenterX + 20, dmg, pierce, thornRange, _garden, HasLeadDetection, HasCamoDetection));
+                            }
                             firedAny = true;
                         }
                     }
@@ -88,8 +97,9 @@ namespace PVZBloonTest.Plants
 
         public override void Draw()
         {
+            float cactusH = _head || _garden ? 120f : 100f;
             DrawUpgradeSprites(Sprites.Cactus, Sprites.CactusT1,
-                               Sprites.CactusT2, 100f, 100f);
+                               Sprites.CactusT2, 100f, cactusH);
             DrawPhotoAura();
             DrawHpBar();
         }

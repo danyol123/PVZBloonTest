@@ -12,7 +12,7 @@ namespace PVZBloonTest.Plants
         public override int        BaseCost     => 50;
         public override string[][] UpgradeNames => new[] {
             new[] { "Faster Sun",       "Twin Sunflowers"  },
-            new[] { "Supporting Growth","Photosynthesis"   },
+            new[] { "Fertilizer",       "Photosynthesis"   },
             new[] { "Solar Power",      "Magnifying Grass" }
         };
         public override int[][] UpgradeCosts => new[] {
@@ -34,7 +34,7 @@ namespace PVZBloonTest.Plants
             switch (path, tier)
             {
                 case (0, 1): _sunInterval = 4f; break;  // Faster Sun: every 4s
-                case (2, 1): _hasSolar    = true; break;
+                case (2, 1): _hasSolar    = true; HasLeadDetection = true; break;
                 case (2, 2): _hasMagGrass = true; break;
             }
         }
@@ -61,7 +61,7 @@ namespace PVZBloonTest.Plants
                     if (_hasSolar){
                         float dmg = _hasMagGrass ? (_sunValue / 25f) * 3f : (_sunValue / 25f) * 3f;
                         int   prc = _hasMagGrass ? 9 : 1;
-                        ctx.Projectiles.Add(new SunBlast(Row, CenterX + i * 30f, dmg, prc, _hasMagGrass));
+                        ctx.Projectiles.Add(new SunBlast(Row, CenterX + i * 30f, dmg, prc, _hasMagGrass, HasLeadDetection, HasCamoDetection));
                     }
                 }
             }
@@ -97,7 +97,6 @@ namespace PVZBloonTest.Plants
                     if (p != null && p != this)
                     {
                         p.HasCamoDetection  = true;
-                        p.HasLeadDetection  = true;
                         p.PhotosynthesisBuff = true;
                     }
                 }

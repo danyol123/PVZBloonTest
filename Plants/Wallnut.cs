@@ -11,7 +11,7 @@ namespace PVZBloonTest.Plants
         public override int        BaseCost     => 50;
         public override string[][] UpgradeNames => new[] {
             new[] { "Tough-nut",     "Tall-nut"     },
-            new[] { "Endurian",      "Super Endurian" },
+            new[] { "Endurian",      "The Shredder" },
             new[] { "Explode-o-nut", "Torchwood"    }
         };
         public override int[][] UpgradeCosts => new[] {
@@ -71,7 +71,7 @@ namespace PVZBloonTest.Plants
                         float dmg    = _superEndurian ? 5f : 2f;
                         int   pierce = _superEndurian ? 3 : 1;
                         ParticleManager.Instance.ProjectileHit(CenterX + 45f, CenterY);
-                        ctx.Projectiles.Add(new Thorn(Row, CenterX + 20, dmg, pierce, 1.5f, _superEndurian));
+                        ctx.Projectiles.Add(new Thorn(Row, CenterX + 20, dmg, pierce, 1.5f, _superEndurian, HasLeadDetection, HasCamoDetection));
                     }
                 }
             }

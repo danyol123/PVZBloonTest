@@ -136,7 +136,7 @@ namespace PVZBloonTest
                     if (p != null && p.IsDead)
                     {
                         if (p is Wallnut wn && wn.HasExplode)
-                            ExplodeArea(c, r, 30f);
+                            ExplodeArea(c, r, 20f);
                         if (_panel.TargetPlant == p) _panel.Close();
                         ParticleManager.Instance.PlantDeath(Grid.CellCenterX(c), Grid.CellCenterY(r));
                         _ctx.Grid.RemovePlant(c, r);

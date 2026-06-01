@@ -19,7 +19,7 @@ namespace PVZBloonTest.Projectiles
             IsPlasma     = plasma;
             HasLead = heat || head || plasma;
             HasCamo = camo;
-            Speed   = 380f;
+            Speed   = 520f;
         }
 
         /// <summary>Called by Torchwood: upgrades a normal spike to heat spike in-place.</summary>
@@ -63,8 +63,7 @@ namespace PVZBloonTest.Projectiles
             Texture2D tex = IsPlasma     ? Sprites.SpikePlasma
                           : IsHeatTipped ? Sprites.SpikeHeat
                           :                Sprites.SpikeNormal;
-            Sprites.DrawCentered(tex, X, Y, 38f, 19f);
-            if (IsPlasma) Raylib.DrawCircle((int)X, (int)Y, 6f, new Color(200, 120, 255, 100));
+            Sprites.DrawCentered(tex, X, Y, 32f, 16f);
         }
     }
 }

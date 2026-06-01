@@ -71,14 +71,14 @@ namespace PVZBloonTest
                     break;
                 case Difficulty.Normal:
                     _totalWaves = 3; _waveDuration = 85f;
-                    _baseInterval = 5f; _minInterval = 1.0f;
-                    _waveBudgets  = new[] { 60, 110, 190 };
+                    _baseInterval = 6f; _minInterval = 1.0f;
+                    _waveBudgets  = new[] { 60, 110, 200 };
                     _pool.AddRange(new EventWave[] { new SpeedyWindsEvent(), new ToughRubberEvent(), new AmbushEvent(), new FeelTheThunderEvent() });
                     break;
                 default: // Hard
                     _totalWaves = 4; _waveDuration = 80f;
-                    _baseInterval = 3.5f; _minInterval = 0.7f;
-                    _waveBudgets  = new[] { 80, 140, 250, 400 };
+                    _baseInterval = 5f; _minInterval = 0.5f;
+                    _waveBudgets  = new[] { 70, 150, 280, 450 };
                     _pool.AddRange(new EventWave[] { new SpeedyWindsEvent(), new ToughRubberEvent(), new AmbushEvent(), new FeelTheThunderEvent(), new SweetDreamsEvent() });
                     break;
             }
@@ -100,26 +100,39 @@ namespace PVZBloonTest
             {
                 list.Add(new BloonDef((r, sx) => new RedBloon(r, sx),    1, 4000));
                 list.Add(new BloonDef((r, sx) => new BlueBloon(r, sx),   2, 3000));
-                list.Add(new BloonDef((r, sx) => new YellowBloon(r, sx), 3, 2200));
+                list.Add(new BloonDef((r, sx) => new YellowBloon(r, sx), 3, 1000));
                 if (seg >= 1)
                 {
+                    list.Add(new BloonDef((r, sx) => new YellowBloon(r, sx), 3, 1000));
                     list.Add(new BloonDef((r, sx) => new PinkBloon(r, sx), 4, 1800));
                     list.Add(new BloonDef((r, sx) => new CamoBloon(r, sx), 5, 1200));
                 }
-                if (seg >= 2) list.Add(new BloonDef((r, sx) => new LeadBloon(r, sx), 8, 700));
+                if (seg >= 2) {
+                    list.Add(new BloonDef((r, sx) => new LeadBloon(r, sx), 8, 700));
+                    list.Add(new BloonDef((r, sx) => new CamoBloon(r, sx), 5, 600));
+                }
             }
             else // Hard
             {
                 list.Add(new BloonDef((r, sx) => new RedBloon(r, sx),    1, 4000));
                 list.Add(new BloonDef((r, sx) => new BlueBloon(r, sx),   2, 3000));
-                list.Add(new BloonDef((r, sx) => new YellowBloon(r, sx), 3, 2200));
-                list.Add(new BloonDef((r, sx) => new CamoBloon(r, sx),   5, 1500));
+                list.Add(new BloonDef((r, sx) => new YellowBloon(r, sx), 3, 1000));
+                list.Add(new BloonDef((r, sx) => new CamoBloon(r, sx),   5, 500));
                 if (seg >= 1)
                 {
+                    list.Add(new BloonDef((r, sx) => new YellowBloon(r, sx), 3, 1300));
+                    list.Add(new BloonDef((r, sx) => new CamoBloon(r, sx),   5, 800));
                     list.Add(new BloonDef((r, sx) => new PinkBloon(r, sx),   4, 1800));
                     list.Add(new BloonDef((r, sx) => new LeadBloon(r, sx),   8,  700));
                 }
-                if (seg >= 2) list.Add(new BloonDef((r, sx) => new CeramicBloon(r, sx), 15, 250));
+                if (seg >= 2) {
+                    list.Add(new BloonDef((r, sx) => new CamoBloon(r, sx),   5, 600));
+                    list.Add(new BloonDef((r, sx) => new LeadBloon(r, sx),   8,  600));
+                    list.Add(new BloonDef((r, sx) => new CeramicBloon(r, sx), 15, 300));
+                }
+                if (seg >= 3) {
+                    list.Add(new BloonDef((r, sx) => new CeramicBloon(r, sx), 15, 500));
+                }
             }
             return list;
         }
@@ -304,7 +317,7 @@ namespace PVZBloonTest
         {
             _columnRushPending      = _currentSeg + 1;          // wave 1→1, wave 2→2, ...
             _columnRushTimer        = 0f;                        // first column fires immediately
-            _columnRushBudgetPerCol = 10 + 15 * (_currentSeg + 1); // grows with each wave
+            _columnRushBudgetPerCol = 10 * (_currentSeg * 2) - 10; // grows with each wave
         }
 
         /// <summary>Spawn one column (all rows) using a weighted+budget pick.</summary>

@@ -29,7 +29,7 @@ namespace PVZBloonTest.Projectiles
             if (IsFire || IsPlasma) return false;
             IsFire  = true;
             HasLead = true;
-            Damage *= 1.4f;
+            Damage *= 1.5f;
             return true;
         }
 
@@ -61,7 +61,7 @@ namespace PVZBloonTest.Projectiles
                     float dy = Grid.CellCenterY(other.Row) - ey;
                     if (dx * dx + dy * dy < 65f * 65f)
                     {
-                        other.TakeDamage(Damage * 0.6f, HasLead, HasCamo);
+                        other.TakeDamage(Damage, HasLead, HasCamo);
                         if (other.IsDead) other.OnDeath(ctx);
                     }
                 }
