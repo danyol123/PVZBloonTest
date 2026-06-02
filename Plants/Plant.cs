@@ -15,7 +15,7 @@ namespace PVZBloonTest.Plants
         public bool  IsDead            { get; private set; } = false;
         public bool  HasCamoDetection  { get; set; } = false;
         public bool  HasLeadDetection  { get; set; } = false;
-        public bool  PhotosynthesisBuff { get; set; } = false;  // set each frame by Photosynthesis sunflower
+        public bool  PhotosynthesisBuff { get; set; } = false; // Set each frame by Photosynthesis sunflower
         public int[] UpgradeLevels     { get; } = new int[3];
 
         public abstract string[][] UpgradeNames { get; }
@@ -32,7 +32,7 @@ namespace PVZBloonTest.Plants
             if (Hp <= 0) { Hp = 0; IsDead = true; }
         }
 
-        // ── Crosspath upgrade rules ───────────────────────────────────
+        // Crosspath upgrade rules
         /// <summary>Number of paths that have at least 1 upgrade.</summary>
         public int UpgradedPathCount()
         {

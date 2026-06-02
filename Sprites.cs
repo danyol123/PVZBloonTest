@@ -7,20 +7,20 @@ namespace PVZBloonTest
 {
     public static class Sprites
     {
-        // ── Plants — base sprites ────────────────────────────────────────
+        // Base plant sprites
         public static Texture2D Peashooter;
         public static Texture2D Sunflower;
         public static Texture2D Wallnut;
         public static Texture2D Cactus;
 
-        // ── Plants — T1 overlay per path [0..2] ─────────────────────────
+        // Plant T1 overlays per path [0..2]
         // Drawn on top of the base sprite when UpgradeLevels[path] == 1
         public static Texture2D[] PeashooterT1 = new Texture2D[3];
         public static Texture2D[] SunflowerT1  = new Texture2D[3];
         public static Texture2D[] WallnutT1    = new Texture2D[3];
         public static Texture2D[] CactusT1     = new Texture2D[3];
 
-        // ── Plants — T2 full crosspath sprite [t2Path 0..2][crossIdx 0..3]
+        // Plant T2 full crosspath sprites [t2Path 0..2][crossIdx 0..3]
         // crossIdx: 0 = no crosspath, 1 = crossed with path0,
         //           2 = crossed with path1, 3 = crossed with path2
         // File names:  {plant}_t2_{t2_path}.png   (no cross)
@@ -30,13 +30,13 @@ namespace PVZBloonTest
         public static Texture2D[,] WallnutT2    = new Texture2D[3, 4];
         public static Texture2D[,] CactusT2     = new Texture2D[3, 4];
 
-        // ── Seed packet icons (HUD cards) ────────────────────────────────
+        // Seed packet icons (HUD cards)
         public static Texture2D IconPeashooter;
         public static Texture2D IconSunflower;
         public static Texture2D IconWallnut;
         public static Texture2D IconCactus;
 
-        // ── Bloons ────────────────────────────────────────────────────────
+        // Bloons sprites
         public static Texture2D BloonRed;
         public static Texture2D BloonBlue;
         public static Texture2D BloonYellow;
@@ -47,7 +47,7 @@ namespace PVZBloonTest
         public static Texture2D BloonMoab;
         public static Texture2D BloonCamo;
 
-        // ── Projectiles ───────────────────────────────────────────────────
+        // Projectiles sprites
         public static Texture2D Pea;
         public static Texture2D PeaFire;
         public static Texture2D PeaPlasma;
@@ -59,16 +59,16 @@ namespace PVZBloonTest
         public static Texture2D SunBlast;
         public static Texture2D SunLaser;
 
-        // ── Sun drop ─────────────────────────────────────────────────────
+        // Sun drop sprite
         public static Texture2D SunDropTex;
 
-        // ── Lawn area backdrops ──────────────────────────────────────────
+        // Lawn area backdrop sprites
         // Drop-in custom PNGs for the house sidebar and bloon spawn strip.
         // See sprites/README.md for exact pixel dimensions.
         public static Texture2D HouseArea;   // left sidebar
         public static Texture2D SpawnArea;   // right spawn strip
 
-        // ── T1 placeholder tints per path ────────────────────────────────
+        // T1 placeholder tints per path
         private static readonly Color[] _t1Colors = {
             new Color(255, 220, 80,  200),   // path 0 — gold   (rate / damage)
             new Color(255, 100, 60,  200),   // path 1 — orange (fire / damage type)
@@ -80,7 +80,7 @@ namespace PVZBloonTest
             new Color(60,  180, 255, 255),   // T2 path 2
         };
 
-        // ─────────────────────────────────────────────────────────────────
+
 
         public static void LoadAll()
         {
@@ -193,7 +193,7 @@ namespace PVZBloonTest
             foreach (var t in arr) if (t.Id != 0) Raylib.UnloadTexture(t);
         }
 
-        // ── Draw helpers ─────────────────────────────────────────────────
+        // Draw helpers
 
         /// <summary>Draw a texture centred at (cx,cy) scaled to w×h, with optional tint and rotation.</summary>
         public static void DrawCentered(Texture2D tex, float cx, float cy,
@@ -215,7 +215,7 @@ namespace PVZBloonTest
         /// </summary>
         public static int CrossIndex(int crossPath) => crossPath < 0 ? 0 : crossPath + 1;
 
-        // ── File loader ──────────────────────────────────────────────────
+        // File loader helper
 
         private static Texture2D Load(string path, Color placeholder)
         {

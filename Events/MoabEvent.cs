@@ -12,7 +12,7 @@ namespace PVZBloonTest.Events
                 for (int i = 0; i < 4; i++)
                 {
                     float ox = bx + 80f + i * 55f;
-                    ctx.BloonsToAdd.Add(i % 2 == 0 ? new YellowBloon(row, ox) : (Bloon)new PinkBloon(row, ox));
+                    ctx.BloonsToAdd.Add(i % 2 == 0 ? new YellowBloon(row, ox) : new PinkBloon(row, ox));
                 }
         }
     }

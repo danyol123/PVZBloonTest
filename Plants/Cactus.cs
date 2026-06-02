@@ -38,7 +38,7 @@ namespace PVZBloonTest.Plants
 
         public override void Update(float dt, GameContext ctx)
         {
-            // ── Main spike attack ────────────────────────────────────
+            // Main spike attack
             _spikeTimer += dt;
             if (_spikeTimer >= 6f)
             {
@@ -50,7 +50,7 @@ namespace PVZBloonTest.Plants
                 } 
             }
 
-            // ── Thorns melee attack ───────────────────────────────────
+            // Thorns melee attack
             if (_thorns)
             {
                 _thornTimer += dt;

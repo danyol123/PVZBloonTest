@@ -28,7 +28,7 @@ namespace PVZBloonTest.Bloons
 
         public float EffectiveSpeed => BaseSpeed * SpeedMult * Constants.SPEED_UNIT;
 
-        // ── Bobbing ──────────────────────────────────────────────────────
+        // Bobbing state variables
         private float _bobTimer = 0f;
         private float _damageParticleTimer = 0f;
 
@@ -40,8 +40,6 @@ namespace PVZBloonTest.Bloons
 
         /// <summary>The Y position used for drawing (includes bob).</summary>
         protected float DrawY => Y + BobOffset;
-
-        // ────────────────────────────────────────────────────────────────
 
         protected Bloon(int row, float startX)
         {
@@ -111,7 +109,7 @@ namespace PVZBloonTest.Bloons
 
         public abstract void Draw();
 
-        // ── DrawBase overloads ───────────────────────────────────────────
+        // Base drawing helper
 
         /// <summary>
         /// Draw using a sprite texture (preferred) or coloured circles as fallback,

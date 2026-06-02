@@ -58,8 +58,9 @@ namespace PVZBloonTest.Plants
                 {
                     float ox = CenterX + (float)(_rng.NextDouble() - 0.5) * 50;
                     ctx.SunDrops.Add(new SunDrop(ox, CenterY - 60, val, false));
-                    if (_hasSolar){
-                        float dmg = _hasMagGrass ? (_sunValue / 25f) * 3f : (_sunValue / 25f) * 3f;
+                    if (_hasSolar)
+                    {
+                        float dmg = (_sunValue / 25f) * 3f;
                         int   prc = _hasMagGrass ? 9 : 1;
                         ctx.Projectiles.Add(new SunBlast(Row, CenterX + i * 30f, dmg, prc, _hasMagGrass, HasLeadDetection, HasCamoDetection));
                     }

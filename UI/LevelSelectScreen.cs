@@ -34,7 +34,7 @@ namespace PVZBloonTest.UI
                 _                 => new[] { "Bloons: + Ceramic, MOAB", "4 Event Waves (MOAB finale!)", "All upgrades available", "Reward: Champion badge!" }
             };
             for (int i = 0; i < desc.Length; i++)
-                Fonts.Draw(desc[i], 370, 230 + i * 38, 18, Color.LightGray);
+                Fonts.Draw(desc[i], 370, 230 + i * 38, 26, Color.LightGray);
 
             Raylib.DrawRectangle(440, 420, 400, 60, new Color(50, 140, 50, 230));
             Raylib.DrawRectangleLines(440, 420, 400, 60, Color.Lime);

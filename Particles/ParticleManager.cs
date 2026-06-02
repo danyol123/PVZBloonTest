@@ -23,7 +23,7 @@ namespace PVZBloonTest.Particles
             BurstEx(x, y, color, count, baseRadius, speed: 60f, speedRange: 160f, life: 0.35f, lifeRange: 0.35f);
         }
 
-        // ── Plant event bursts ──────────────────────────────────────────────
+        // Plant event bursts
 
         /// <summary>Green sparkle when a plant is placed.</summary>
         public void PlantPlace(float x, float y)
@@ -104,7 +104,7 @@ namespace PVZBloonTest.Particles
             BurstEx(x, y, new Color(255, 220, 60, 255), 1, 5f, 40f, 30f, 0.5f, 0.4f, upBias: 25f);
         }
 
-        // ── Core helper ────────────────────────────────────────────────────
+        // Core helper
 
         private void BurstEx(float x, float y, Color color,
                              int count, float baseRadius,

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PVZBloonTest")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+88d7a00c7bcd68b1110c3c03d45b25092428b474")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8310ac9b0e7840835ee3d4532411cdfe9724b2e7")]
 [assembly: System.Reflection.AssemblyProductAttribute("PVZBloonTest")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PVZBloonTest")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

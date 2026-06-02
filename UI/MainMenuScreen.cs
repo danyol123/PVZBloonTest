@@ -35,23 +35,23 @@ namespace PVZBloonTest.UI
                 Raylib.DrawCircle((int)gx + 27, Constants.SCREEN_H - 65, 27f, new Color(45, 140, 45, 200));
             }
 
-            string title = "PVZ: Bloon Defense";
-            int tw = Fonts.Measure(title, 54);
-            Fonts.Draw(title, Constants.SCREEN_W / 2 - tw / 2 + 3, 113, 54, new Color(0, 0, 0, 150));
-            Fonts.Draw(title, Constants.SCREEN_W / 2 - tw / 2,     110, 54, new Color(90, 220, 70, 255));
+            string title = "PLANTS vs. BLOONS";
+            int tw = Fonts.Measure(title, 64);
+            Fonts.Draw(title, Constants.SCREEN_W / 2 - tw / 2 + 3, 113, 64, new Color(0, 0, 0, 150));
+            Fonts.Draw(title, Constants.SCREEN_W / 2 - tw / 2,     110, 64, new Color(90, 220, 70, 255));
 
-            string sub = "Defend your home from the bloons!";
-            int sw = Fonts.Measure(sub, 20);
-            Fonts.Draw(sub, Constants.SCREEN_W / 2 - sw / 2, 178, 20, new Color(170, 210, 150, 220));
+            string sub = "Defend your lawn from BLOONS!";
+            int sw = Fonts.Measure(sub, 32);
+            Fonts.Draw(sub, Constants.SCREEN_W / 2 - sw / 2, 200, 32, new Color(170, 210, 150, 220));
 
             DrawBtn(440, 310, 400, 55, "EASY",   unlock.IsDifficultyUnlocked(Difficulty.Easy),   new Color(60, 180, 60, 255));
             DrawBtn(440, 385, 400, 55, "NORMAL", unlock.IsDifficultyUnlocked(Difficulty.Normal), new Color(220, 180, 40, 255));
             DrawBtn(440, 460, 400, 55, "HARD",   unlock.IsDifficultyUnlocked(Difficulty.Hard),   new Color(220, 60, 40, 255));
 
             if (!unlock.IsDifficultyUnlocked(Difficulty.Normal))
-                Fonts.Draw("Beat Easy to unlock", 490, 394, 11, Color.Gray);
+                Fonts.Draw("Beat Easy to unlock", 450, 394, 16, Color.Gray);
             if (!unlock.IsDifficultyUnlocked(Difficulty.Hard))
-                Fonts.Draw("Beat Normal to unlock", 490, 469, 11, Color.Gray);
+                Fonts.Draw("Beat Normal to unlock", 450, 469, 16, Color.Gray);
             if (unlock.HardBeaten)
             {
                 string badge = "** CHAMPION **";

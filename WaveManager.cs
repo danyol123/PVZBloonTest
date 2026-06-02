@@ -32,7 +32,7 @@ namespace PVZBloonTest
         private int                     _waveDeployed    = 0;
         private bool                    _earlyTriggered  = false;
 
-        // ── Tunable thresholds ───────────────────────────────────────────────
+        // Tunable thresholds
         /// <summary>Fraction of deployed bloons that must be defeated to trigger the early rush.</summary>
         private const float EARLY_TRIGGER_THRESHOLD    = 0.8f;
         /// <summary>Minimum fraction of the wave's total bloons that must be deployed before the threshold is checked.
@@ -86,7 +86,7 @@ namespace PVZBloonTest
             PreGenerateWave(0);
         }
 
-        // ── Available bloon pool per segment/difficulty ──────────────────────
+        // Available bloon pool per segment/difficulty
         private List<BloonDef> GetAvailableBloons(int seg)
         {
             var list = new List<BloonDef>();
@@ -137,7 +137,7 @@ namespace PVZBloonTest
             return list;
         }
 
-        // ── Pre-generate full wave composition upfront (PVZ-style) ───────────
+        // Pre-generate full wave composition upfront (PVZ-style)
         private void PreGenerateWave(int seg)
         {
             _waveQueue.Clear();
@@ -179,7 +179,7 @@ namespace PVZBloonTest
             _bloonsRemaining = _bloonsTotal;
         }
 
-        // ── Weighted random pick ─────────────────────────────────────────────
+        // Weighted random pick
         private BloonDef WeightedPick(List<BloonDef> pool)
         {
             int total = 0;
@@ -209,7 +209,7 @@ namespace PVZBloonTest
             if (_roundComplete) return;
             if (ctx.EventNotificationTimer > 0f) ctx.EventNotificationTimer -= dt;
 
-            // ── Tick column rush ─────────────────────────────────────────────
+            // Tick column rush
             if (_columnRushPending > 0)
             {
                 _columnRushTimer -= dt;
@@ -231,7 +231,7 @@ namespace PVZBloonTest
             _segTimer   += dt;
             _spawnTimer += dt;
 
-            // ── Early-trigger: threshold check → countdown → fire ────────────
+            // Early-trigger: threshold check -> countdown -> fire
             // Guard: only arm once EARLY_TRIGGER_MIN_DEPLOYED fraction of the
             // pre-generated wave has actually been sent (prevents instant trigger
             // at wave start when only 1-2 bloons have spawned and been popped).
@@ -272,7 +272,7 @@ namespace PVZBloonTest
                 }
             }
 
-            // ── Regular spawn from pre-generated queue ───────────────────────
+            // Regular spawn from pre-generated queue
             if (_spawnTimer >= CurrentInterval() && _waveQueue.Count > 0)
             {
                 _spawnTimer = 0f;
@@ -290,7 +290,7 @@ namespace PVZBloonTest
                 }
             }
 
-            // ── Wave-end event trigger ───────────────────────────────────────
+            // Wave-end event trigger
             if (_segTimer >= _waveDuration && !_eventFired[_currentSeg])
             {
                 _eventFired[_currentSeg] = true;
@@ -298,7 +298,7 @@ namespace PVZBloonTest
                 TriggerEvent(ctx);
             }
 
-            // ── Advance to next segment after grace period ───────────────────
+            // Advance to next segment after grace period
             if (_segTimer >= _waveDuration + 5f)
             {
                 _segTimer      = 0f;
@@ -312,12 +312,12 @@ namespace PVZBloonTest
             }
         }
 
-        // ── Column rush: wave N fires N columns with a short delay each ──────
+        // Column rush: wave N fires N columns with a short delay each
         private void InitiateColumnRush()
         {
             _columnRushPending      = _currentSeg + 1;          // wave 1→1, wave 2→2, ...
-            _columnRushTimer        = 0f;                        // first column fires immediately
-            _columnRushBudgetPerCol = 10 * (_currentSeg * 2) - 10; // grows with each wave
+            _columnRushTimer        = 0f;                       // first column fires immediately
+            _columnRushBudgetPerCol = 10 * (_currentSeg * 2);   // grows with each wave
         }
 
         /// <summary>Spawn one column (all rows) using a weighted+budget pick.</summary>

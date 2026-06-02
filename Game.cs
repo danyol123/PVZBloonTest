@@ -16,11 +16,9 @@ namespace PVZBloonTest
         private readonly UpgradePanel      _panel     = new();
         private float _endTimer = 0f;
 
-        // private Font _font; -- Font is now managed globally via Fonts.cs
-
         public Game() { _ctx.UnlockManager = new UnlockManager(); }
 
-        // ── Main loop ────────────────────────────────────────────────
+        /// <summary>Updates the game state based on the current active state.</summary>
         public void Update(float dt)
         {
             switch (_state)
@@ -47,7 +45,7 @@ namespace PVZBloonTest
             Raylib.EndDrawing();
         }
 
-        // ── Menus ────────────────────────────────────────────────────
+        // State machine updates
         private void UpdateMenu(float dt)
         {
             _mainMenu.Update(dt, _ctx.UnlockManager);
@@ -61,7 +59,7 @@ namespace PVZBloonTest
             if (_levelSel.GoBack)   _state = GameState.MainMenu;
         }
 
-        // ── Start game ───────────────────────────────────────────────
+        // Gameplay initialization
         private void StartGame(Difficulty diff)
         {
             _ctx.Reset(diff);
@@ -71,11 +69,10 @@ namespace PVZBloonTest
             _state = GameState.Playing;
         }
 
-        // ── Playing ──────────────────────────────────────────────────
+        // Active gameplay updates
         private void UpdatePlaying(float dt)
         {
-            // ── Slow down simulation while upgrade panel is open ─────────────────
-            // (Placing a plant does NOT pause: panel-only)
+            // Slow down simulation while upgrade panel is open (placing a plant does NOT pause)
             bool paused  = _panel.IsOpen;
             float gameDt = paused ? dt * 0.5f : dt;
 
@@ -86,7 +83,7 @@ namespace PVZBloonTest
             int mx = (int)mp.X, my = (int)mp.Y;
             bool leftClicked = Raylib.IsMouseButtonPressed(MouseButton.Left);
 
-            // ── Sun drops ────────────────────────────────────────────
+            // Sun drops update and collection
             foreach (var d in _ctx.SunDrops) d.Update(gameDt);
 
             // Hover collection — sun gathered by moving mouse over it
@@ -99,7 +96,7 @@ namespace PVZBloonTest
                 if (d.IsExpired && !d.SunClaimed) { _ctx.SunManager.AddSun(d.Value); d.SunClaimed = true; ParticleManager.Instance.SunCollect(d.X, d.Y); }
             _ctx.SunDrops.RemoveAll(d => d.IsExpired);
 
-            // ── Upgrade panel ────────────────────────────────────────
+            // Upgrade panel update and interaction
             bool panelConsumed = _panel.Update(_ctx);
 
             // Close panel when clicking outside its rectangle
@@ -126,7 +123,7 @@ namespace PVZBloonTest
             if (Raylib.IsKeyPressed(KeyboardKey.Escape))
             { if (_panel.IsOpen) _panel.Close(); else _hud.Deselect(); }
 
-            // ── Plants ───────────────────────────────────────────────
+            // Plants update and death processing
             foreach (var p in _ctx.Grid.AllPlants()) if (!p.IsDead) p.Update(gameDt, _ctx);
             for (int c = 0; c < Constants.GRID_COLS; c++)
             {
@@ -144,21 +141,21 @@ namespace PVZBloonTest
                 }
             }
 
-            // ── Bloons ───────────────────────────────────────────────
+            // Bloons update and collision/blocking processing
             HandleBlocking();
             foreach (var b in _ctx.Bloons) b.Update(gameDt, _ctx);
             _ctx.Bloons.RemoveAll(b => b.IsDead);
             _ctx.Bloons.AddRange(_ctx.BloonsToAdd);
             _ctx.BloonsToAdd.Clear();
 
-            // ── Projectiles ──────────────────────────────────────────
+            // Projectiles update
             foreach (var p in _ctx.Projectiles) p.Update(gameDt, _ctx);
             _ctx.Projectiles.RemoveAll(p => p.IsDead);
 
-            // ── Particles ────────────────────────────────────────────
+            // Particles update
             ParticleManager.Instance.Update(gameDt);
 
-            // ── Waves ────────────────────────────────────────────────
+            // Waves update
             _ctx.WaveManager.Update(gameDt, _ctx);
 
             if (_ctx.Lives <= 0) { _endTimer = 0; _state = GameState.GameOver; }
@@ -241,14 +238,13 @@ namespace PVZBloonTest
             }
         }
 
-        // ── Draw playing ─────────────────────────────────────────────
+        // Active gameplay drawing
         private void DrawPlaying()
         {
             Raylib.ClearBackground(new Color(15, 25, 15, 255));
             _ctx.Grid.Draw(_ctx.IsNightMode);
 
-            // ── Plant-tile hover highlight (no card held, not shovel) ─────────
-            // Hints to the player that clicking a plant opens its upgrade panel.
+            // Plant-tile hover highlight (no card held, not shovel) to prompt upgrade panel opening
             {
                 var mpH = Raylib.GetMousePosition();
                 if (_hud.SelectedCard < 0
@@ -287,7 +283,7 @@ namespace PVZBloonTest
             _hud.Draw(_ctx);
             _panel.Draw(_ctx);
 
-            // ── Tile hover highlight when holding a plant card ───────────────
+            // Tile hover highlight when holding a plant card
             if (_hud.SelectedCard >= 0 && _hud.SelectedCard < 4)
             {
                 var mp2 = Raylib.GetMousePosition();
@@ -312,7 +308,7 @@ namespace PVZBloonTest
                 Raylib.DrawCircle((int)mp.X, (int)mp.Y, 12f, new Color(100, 200, 100, 60));
             }
 
-            // ── Event banner ─────────────────────────────────────────
+            // Event banner drawing
             if (_ctx.EventNotificationTimer > 0f && _ctx.EventNotification.Length > 0)
             {
                 float alpha = System.Math.Min(1f, _ctx.EventNotificationTimer / 0.5f);
@@ -327,15 +323,10 @@ namespace PVZBloonTest
                 Fonts.Draw(msg, Constants.SCREEN_W / 2 - tw / 2, by + 10, 30, new Color(255, 220, 80, ia));
             }
 
-            // ── DEBUG: wave budget ────────────────────────────────────────
-            if (_ctx.WaveManager != null)
-            {
-                string dbg = $"Budget: {_ctx.WaveManager.BudgetLeft} / {_ctx.WaveManager.TotalBudget}";
-                Fonts.Draw(dbg, Constants.SCREEN_W - Fonts.Measure(dbg, 14) - 6, Constants.HUD_H + 4, 14, new Color(180, 255, 180, 180));
-            }
+
         }
 
-        // ── End screens ───────────────────────────────────────────────
+        // End game screens and logic
         private void UpdateEnd(float dt)
         {
             _endTimer += dt;

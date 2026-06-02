@@ -61,7 +61,7 @@ namespace PVZBloonTest
             Color gl = new Color(0, 0, 0, 40);
             int areaH = Constants.GRID_ROWS * Constants.CELL_H;
 
-            // ── Grid cells ────────────────────────────────────────────────────
+            // Grid cells
             for (int c = 0; c < Constants.GRID_COLS; c++)
                 for (int r = 0; r < Constants.GRID_ROWS; r++)
                 {
@@ -72,12 +72,12 @@ namespace PVZBloonTest
                     Raylib.DrawRectangleLines(px, py, Constants.CELL_W, Constants.CELL_H, gl);
                 }
 
-            // ── House sidebar (left of grid, width = GRID_X = 200) ────────────
+            // House sidebar (left of grid, width = GRID_X = 200)
             Sprites.DrawCentered(Sprites.HouseArea,
                 Constants.GRID_X / 2f, Constants.GRID_Y + areaH / 2f,
                 Constants.GRID_X, areaH);
 
-            // ── Bloon spawn strip (right of grid) ─────────────────────────────
+            // Bloon spawn strip (right of grid)
             int spawnX = Constants.GRID_X + Constants.GRID_COLS * Constants.CELL_W;
             int spawnW = Constants.SCREEN_W - spawnX;
             Sprites.DrawCentered(Sprites.SpawnArea,

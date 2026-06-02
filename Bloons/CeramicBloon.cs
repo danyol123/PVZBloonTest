@@ -22,7 +22,7 @@ namespace PVZBloonTest.Bloons
                 1 => new BlueBloon(Row, X),
                 2 => new YellowBloon(Row, X),
                 3 => new CamoBloon(Row, X),
-                _ => (Bloon)new PinkBloon(Row, X)
+                _ => new PinkBloon(Row, X)
             };
             spawn.SpeedMult = SpeedMult;
             ctx.BloonsToAdd.Add(spawn);

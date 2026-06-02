@@ -70,7 +70,7 @@ namespace PVZBloonTest.UI
             Raylib.DrawRectangle(px, py, PW, PH, new Color(18, 18, 38, 235));
             Raylib.DrawRectangleLines(px, py, PW, PH, new Color(120, 100, 200, 255));
 
-            // ── Header ───────────────────────────────────────────────
+            // Header
             Fonts.Draw(TargetPlant.PlantType.ToString(), px + 10, py + 8, 20, Color.White);
             Fonts.Draw($"HP: {(int)TargetPlant.Hp}/{(int)TargetPlant.MaxHp}", px + 10, py + 32, 15, Color.Lime);
             string xp = $"Paths: {TargetPlant.UpgradedPathCount()}/2  T2: {TargetPlant.Tier2Count()}/1";
@@ -80,14 +80,14 @@ namespace PVZBloonTest.UI
             Raylib.DrawRectangle(px + PW - 28, py + 4, 24, 20, new Color(180, 50, 50, 255));
             Fonts.Draw("X", px + PW - 22, py + 5, 14, Color.White);
 
-            // ── Camo / Lead detection badges ─────────────────────────
+            // Camo / Lead detection badges
             int badgeY = py + 70;
             DrawDetectionBadge(px + 10, badgeY, "CAMO", TargetPlant.HasCamoDetection,
                 new Color(100, 200, 100, 220), new Color(30, 160, 30, 255), new Color(10, 100, 10, 255));
             DrawDetectionBadge(px + 82, badgeY, "LEAD", TargetPlant.HasLeadDetection,
                 new Color(100, 200, 100, 220), new Color(30, 160, 30, 255), new Color(10, 100, 10, 255));
 
-            // ── Upgrade paths ─────────────────────────────────────────
+            // Upgrade paths
             Color[] pc = { new Color(255, 180, 30, 255), new Color(80, 200, 100, 255), new Color(100, 180, 255, 255) };
 
             for (int path = 0; path < 3; path++)
@@ -131,7 +131,7 @@ namespace PVZBloonTest.UI
                 }
             }
 
-            // ── Upgrade tooltip on hover ──────────────────────────────
+            // Upgrade tooltip on hover
             if (_hoveredPath >= 0 && TargetPlant != null)
             {
                 string desc = GetDescription(TargetPlant.PlantType, _hoveredPath, _hoveredTier);
