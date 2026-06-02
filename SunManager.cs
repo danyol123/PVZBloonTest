@@ -11,7 +11,7 @@ namespace PVZBloonTest
         private const float Interval = 4f;   // natural sun drop every 4s
         private readonly Random _rng = new();
 
-        public void Reset() { Sun = 10000; _timer = 0f; } // set to 10000 for testing
+        public void Reset(Difficulty diff) { Sun = diff == Difficulty.Showcase ? 10000 : 50; _timer = 0f; }
         public void AddSun(int v) => Sun += v;
         public bool SpendSun(int v) { if (Sun < v) return false; Sun -= v; return true; }
 

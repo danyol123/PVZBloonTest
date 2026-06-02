@@ -64,6 +64,7 @@ namespace PVZBloonTest
         {
             _ctx.Reset(diff);
             _ctx.WaveManager = new WaveManager(diff);
+            _ctx.UnlockManager.AllUnlocked = (diff == Difficulty.Showcase);
             _hud.Deselect();
             _panel.Close();
             _state = GameState.Playing;
@@ -349,9 +350,10 @@ namespace PVZBloonTest
 
         private string GetVictoryMsg() => _ctx.Difficulty switch
         {
-            Difficulty.Easy   => "Normal + Tier 1 upgrades unlocked!",
-            Difficulty.Normal => "Hard + Tier 2 upgrades unlocked!",
-            _                 => "You earned the Champion badge!"
+            Difficulty.Easy     => "Normal + Tier 1 upgrades unlocked!",
+            Difficulty.Normal   => "Hard + Tier 2 upgrades unlocked!",
+            Difficulty.Showcase => "Showcase complete! No unlocks changed.",
+            _                   => "You earned the Champion badge!"
         };
     }
 }

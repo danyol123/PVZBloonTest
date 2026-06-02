@@ -25,13 +25,19 @@ namespace PVZBloonTest.UI
             Raylib.ClearBackground(new Color(20, 35, 20, 255));
             string title = $"{_diff} Difficulty";
             int tw = Fonts.Measure(title, 40);
-            Color tc = _diff switch { Difficulty.Easy => new Color(80,220,80,255), Difficulty.Normal => new Color(240,200,40,255), _ => new Color(240,80,60,255) };
+            Color tc = _diff switch {
+                Difficulty.Easy     => new Color(80,  220, 80,  255),
+                Difficulty.Normal   => new Color(240, 200, 40,  255),
+                Difficulty.Showcase => new Color(180, 80,  255, 255),
+                _                   => new Color(240, 80,  60,  255)
+            };
             Fonts.Draw(title, Constants.SCREEN_W / 2 - tw / 2, 130, 40, tc);
 
             string[] desc = _diff switch {
-                Difficulty.Easy   => new[] { "Bloons: Red, Blue, Yellow", "2 Event Waves", "No upgrades available", "Reward: Unlock Normal + Tier 1 upgrades" },
-                Difficulty.Normal => new[] { "Bloons: + Camo, Pink, Lead", "3 Event Waves", "Tier 1 upgrades available", "Reward: Unlock Hard + Tier 2 upgrades" },
-                _                 => new[] { "Bloons: + Ceramic, MOAB", "4 Event Waves (MOAB finale!)", "All upgrades available", "Reward: Champion badge!" }
+                Difficulty.Easy     => new[] { "Bloons: Red, Blue, Yellow", "2 Event Waves", "No upgrades available", "Reward: Unlock Normal + Tier 1 upgrades" },
+                Difficulty.Normal   => new[] { "Bloons: + Camo, Pink, Lead", "3 Event Waves", "Tier 1 upgrades available", "Reward: Unlock Hard + Tier 2 upgrades" },
+                Difficulty.Showcase => new[] { "All 8 bloon types spawn instantly!", "Wave 1 Event: Sweet Dreams  |  Wave 2 Event: M.O.A.B.", "All upgrades available", "For testing / showcase purposes only" },
+                _                   => new[] { "Bloons: + Ceramic, MOAB", "4 Event Waves (MOAB finale!)", "All upgrades available", "Reward: Champion badge!" }
             };
             for (int i = 0; i < desc.Length; i++)
                 Fonts.Draw(desc[i], 370, 230 + i * 38, 26, Color.LightGray);

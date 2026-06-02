@@ -47,7 +47,7 @@ namespace PVZBloonTest
             Projectiles.Clear();
             SunDrops.Clear();
             Grid.Clear();
-            SunManager.Reset();
+            SunManager.Reset(diff);
             Particles.ParticleManager.Instance.Clear();
         }
     }

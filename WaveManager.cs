@@ -14,6 +14,7 @@ namespace PVZBloonTest
         private readonly float _minInterval;
         private float _segTimer, _spawnTimer;
         private int   _currentSeg    = 0;
+        private bool  _pendingInstantSpawn = false;
         private bool[] _eventFired;
         private bool   _roundComplete = false;
         private readonly List<EventWave> _pool = new();
@@ -75,11 +76,17 @@ namespace PVZBloonTest
                     _waveBudgets  = new[] { 60, 110, 200 };
                     _pool.AddRange(new EventWave[] { new SpeedyWindsEvent(), new ToughRubberEvent(), new AmbushEvent(), new FeelTheThunderEvent() });
                     break;
-                default: // Hard
+                case Difficulty.Hard:
                     _totalWaves = 4; _waveDuration = 80f;
                     _baseInterval = 5f; _minInterval = 0.5f;
                     _waveBudgets  = new[] { 70, 150, 280, 450 };
                     _pool.AddRange(new EventWave[] { new SpeedyWindsEvent(), new ToughRubberEvent(), new AmbushEvent(), new FeelTheThunderEvent(), new SweetDreamsEvent() });
+                    break;
+                default: // Showcase
+                    _totalWaves = 2; _waveDuration = 60f;
+                    _baseInterval = 9999f; _minInterval = 9999f; // bloons spawn instantly, not via timer
+                    _waveBudgets  = new[] { 0, 0 };              // unused for Showcase
+                    // no event pool — events are deterministic (SweetDreams then MOAB)
                     break;
             }
             _eventFired = new bool[_totalWaves];
@@ -142,10 +149,40 @@ namespace PVZBloonTest
         {
             _waveQueue.Clear();
             _waveBloons.Clear();
-            _waveDeployed        = 0;
-            _earlyTriggered      = false;
+            _waveDeployed          = 0;
+            _earlyTriggered        = false;
             _earlyTriggerCountdown = -1f;
+            _pendingInstantSpawn   = false;
 
+            // ── Showcase: wave 0 → one of every bloon type (instant); wave 1 → empty (MOAB event spawns)
+            if (_diff == Difficulty.Showcase)
+            {
+                if (seg == 0)
+                {
+                    float sx0 = Constants.GRID_X + Constants.GRID_COLS * Constants.CELL_W + 20f;
+                    // Helper to safely capture row+x in the closure
+                    void Enq(Func<int, float, Bloon> factory, int row, float offset)
+                    {
+                        float x = sx0 + offset;
+                        _waveQueue.Enqueue(() => factory(row, x));
+                    }
+                    Enq((r, x) => new RedBloon(r, x),      0,   0f);
+                    Enq((r, x) => new BlueBloon(r, x),     1,  60f);
+                    Enq((r, x) => new YellowBloon(r, x),   2, 120f);
+                    Enq((r, x) => new PinkBloon(r, x),     3, 180f);
+                    Enq((r, x) => new CamoBloon(r, x),     4, 240f);
+                    Enq((r, x) => new LeadBloon(r, x),     0, 300f);
+                    Enq((r, x) => new CeramicBloon(r, x),  1, 360f);
+                    Enq((r, x) => new MoabBloon(r, x),     2, 420f);
+                    _pendingInstantSpawn = true;
+                }
+                // seg == 1: no bloons pre-generated; MOAB event handles spawning
+                _bloonsTotal     = _waveQueue.Count;
+                _bloonsRemaining = _bloonsTotal;
+                return;
+            }
+
+            // ── Normal difficulty pre-generation ──────────────────────────────────────
             float sx        = Constants.GRID_X + Constants.GRID_COLS * Constants.CELL_W + 20f;
             int   budget    = _waveBudgets[seg];
             var   available = GetAvailableBloons(seg);
@@ -208,6 +245,21 @@ namespace PVZBloonTest
         {
             if (_roundComplete) return;
             if (ctx.EventNotificationTimer > 0f) ctx.EventNotificationTimer -= dt;
+
+            // Showcase: instantly deploy all pre-generated wave-0 bloons on the first tick
+            if (_pendingInstantSpawn)
+            {
+                _pendingInstantSpawn = false;
+                while (_waveQueue.Count > 0)
+                {
+                    var b = _waveQueue.Dequeue()();
+                    ApplyEventMults(b, ctx);
+                    ctx.BloonsToAdd.Add(b);
+                    _waveBloons.Add(b);
+                    _waveDeployed++;
+                }
+                _bloonsRemaining = 0;
+            }
 
             // Tick column rush
             if (_columnRushPending > 0)
@@ -315,6 +367,7 @@ namespace PVZBloonTest
         // Column rush: wave N fires N columns with a short delay each
         private void InitiateColumnRush()
         {
+            if (_diff == Difficulty.Showcase) return; // Showcase uses MOAB event instead
             _columnRushPending      = _currentSeg + 1;          // wave 1→1, wave 2→2, ...
             _columnRushTimer        = 0f;                       // first column fires immediately
             _columnRushBudgetPerCol = 10 * (_currentSeg * 2);   // grows with each wave
@@ -349,6 +402,14 @@ namespace PVZBloonTest
 
         private void TriggerEvent(GameContext ctx)
         {
+            // Showcase: deterministic event sequence
+            if (_diff == Difficulty.Showcase)
+            {
+                if (_currentSeg == 0) { var sd = new SweetDreamsEvent(); sd.Trigger(ctx, _diff); SetNotification(ctx, sd.Name); return; }
+                if (_currentSeg == 1) { var mb = new MoabEvent();        mb.Trigger(ctx, _diff); SetNotification(ctx, mb.Name); return; }
+                return;
+            }
+
             if (_diff == Difficulty.Hard && _currentSeg == _totalWaves - 1)
             { var mv = new MoabEvent(); mv.Trigger(ctx, _diff); SetNotification(ctx, mv.Name); return; }
 

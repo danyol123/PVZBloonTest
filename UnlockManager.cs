@@ -12,6 +12,8 @@ namespace PVZBloonTest
         public bool HardBeaten    { get; private set; }
         public bool Tier1Unlocked { get; private set; }
         public bool Tier2Unlocked { get; private set; }
+        /// <summary>Temporarily true while a Showcase run is active; grants all upgrade tiers without touching the save.</summary>
+        public bool AllUnlocked   { get; set; } = false;
 
         public UnlockManager()
         {
@@ -21,13 +23,14 @@ namespace PVZBloonTest
 
         public bool IsDifficultyUnlocked(Difficulty d) => d switch
         {
-            Difficulty.Easy   => true,
-            Difficulty.Normal => EasyBeaten,
-            Difficulty.Hard   => NormalBeaten,
-            _                 => false
+            Difficulty.Easy     => true,
+            Difficulty.Normal   => EasyBeaten,
+            Difficulty.Hard     => NormalBeaten,
+            Difficulty.Showcase => true,   // always available
+            _                   => false
         };
 
-        public bool IsUpgradeTierUnlocked(int tier) => tier switch
+        public bool IsUpgradeTierUnlocked(int tier) => AllUnlocked || tier switch
         {
             1 => Tier1Unlocked,
             2 => Tier2Unlocked,
@@ -38,9 +41,10 @@ namespace PVZBloonTest
         {
             switch (d)
             {
-                case Difficulty.Easy:   EasyBeaten   = true; Tier1Unlocked = true; break;
-                case Difficulty.Normal: NormalBeaten = true; Tier2Unlocked = true; break;
-                case Difficulty.Hard:   HardBeaten   = true; break;
+                case Difficulty.Easy:     EasyBeaten   = true; Tier1Unlocked = true; break;
+                case Difficulty.Normal:   NormalBeaten = true; Tier2Unlocked = true; break;
+                case Difficulty.Hard:     HardBeaten   = true; break;
+                case Difficulty.Showcase: return; // no persistent unlocks for showcase
             }
             Save();
         }

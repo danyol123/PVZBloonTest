@@ -19,6 +19,8 @@ namespace PVZBloonTest.UI
                 SelectedDifficulty = Difficulty.Normal;
             else if (InBtn(mx, my, 440, 460, 400, 55) && unlock.IsDifficultyUnlocked(Difficulty.Hard))
                 SelectedDifficulty = Difficulty.Hard;
+            else if (InBtn(mx, my, 440, 535, 400, 50))
+                SelectedDifficulty = Difficulty.Showcase;
         }
 
         public void Draw(UnlockManager unlock)
@@ -47,6 +49,7 @@ namespace PVZBloonTest.UI
             DrawBtn(440, 310, 400, 55, "EASY",   unlock.IsDifficultyUnlocked(Difficulty.Easy),   new Color(60, 180, 60, 255));
             DrawBtn(440, 385, 400, 55, "NORMAL", unlock.IsDifficultyUnlocked(Difficulty.Normal), new Color(220, 180, 40, 255));
             DrawBtn(440, 460, 400, 55, "HARD",   unlock.IsDifficultyUnlocked(Difficulty.Hard),   new Color(220, 60, 40, 255));
+            DrawBtn(440, 535, 400, 50, "SHOWCASE [TEST]", true, new Color(150, 60, 220, 255));
 
             if (!unlock.IsDifficultyUnlocked(Difficulty.Normal))
                 Fonts.Draw("Beat Easy to unlock", 450, 394, 16, Color.Gray);
@@ -55,7 +58,7 @@ namespace PVZBloonTest.UI
             if (unlock.HardBeaten)
             {
                 string badge = "** CHAMPION **";
-                Fonts.Draw(badge, Constants.SCREEN_W / 2 - Fonts.Measure(badge, 22) / 2, 535, 22, new Color(255, 220, 30, 255));
+                Fonts.Draw(badge, Constants.SCREEN_W / 2 - Fonts.Measure(badge, 22) / 2, 602, 22, new Color(255, 220, 30, 255));
             }
         }
 
