@@ -2,11 +2,11 @@ using System;
 using PVZBloonTest.Bloons;
 namespace PVZBloonTest.Events
 {
-    public class AmbushEvent : EventWave
+    public class AmbushEvent : IEventWave
     {
         private static readonly Random _rng = new();
-        public override string Name => "Ambush!";
-        public override void Trigger(GameContext ctx, Difficulty diff)
+        public string Name => "Ambush!";
+        public void Trigger(GameContext ctx, Difficulty diff)
         {
             int count  = diff == Difficulty.Hard ? 6 : 4;
             int minCol = diff == Difficulty.Hard ? 4 : 6;

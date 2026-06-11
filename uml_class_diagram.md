@@ -100,7 +100,7 @@ classDiagram
         -int _currentSeg
         -int _totalWaves
         -float _baseInterval
-        -List~EventWave~ _pool
+        -List~IEventWave~ _pool
         +bool RoundComplete
         +string WaveLabel
         +float WaveProgress
@@ -259,10 +259,10 @@ classDiagram
     %%  EVENTS
     %% ═══════════════════════════════════════════
 
-    class EventWave {
-        <<abstract>>
-        +string Name*
-        +Trigger(ctx, diff)*
+    class IEventWave {
+        <<interface>>
+        +string Name
+        +Trigger(ctx, diff)
     }
 
     class SpeedyWindsEvent
@@ -365,15 +365,15 @@ classDiagram
     Projectile <|-- SunBlast
 
     %% Event hierarchy
-    EventWave <|-- SpeedyWindsEvent
-    EventWave <|-- ToughRubberEvent
-    EventWave <|-- AmbushEvent
-    EventWave <|-- FeelTheThunderEvent
-    EventWave <|-- SweetDreamsEvent
-    EventWave <|-- MoabEvent
+    IEventWave <|.. SpeedyWindsEvent
+    IEventWave <|.. ToughRubberEvent
+    IEventWave <|.. AmbushEvent
+    IEventWave <|.. FeelTheThunderEvent
+    IEventWave <|.. SweetDreamsEvent
+    IEventWave <|.. MoabEvent
 
     %% Wave manager owns event pool
-    WaveManager "1" o-- "*" EventWave
+    WaveManager "1" o-- "*" IEventWave
 
     %% Key dependency arrows (dashed = uses/creates)
     Peashooter ..> Pea : creates
@@ -404,7 +404,7 @@ The system follows a layered architecture with a central shared-state hub (`Game
 | **Entities — Plants** | `Plant` (abstract) → 4 concrete types |
 | **Entities — Bloons** | `Bloon` (abstract) → 8 difficulty-tiered types |
 | **Entities — Projectiles** | `Projectile` (abstract) → `Pea`, `Spike`, `Thorn`, `SunBlast` |
-| **Wave Events** | `EventWave` (abstract) → 6 event modifiers |
+| **Wave Events** | `IEventWave` (interface) → 6 event modifiers |
 | **UI** | `HUD`, `UpgradePanel`, `SunDrop`, `MainMenuScreen`, `LevelSelectScreen` |
 | **Config** | `Constants` (static), `Enums` |
 
@@ -412,5 +412,5 @@ The system follows a layered architecture with a central shared-state hub (`Game
 
 - **Template Method** — `Plant`, `Bloon`, and `Projectile` each define abstract `Update` / `Draw` hooks that concrete subclasses override.
 - **Crosspath Upgrade System** — `Plant` enforces BTD6-style restrictions: max 2 active paths, only 1 path may reach Tier 2.
-- **Observer-like event pool** — `WaveManager` draws from a shuffled `EventWave` pool, triggering modifiers at wave boundaries.
+- **Observer-like event pool** — `WaveManager` draws from a shuffled `IEventWave` pool, triggering modifiers at wave boundaries.
 - **Torchwood Transform** — `Wallnut` (Torchwood upgrade) intercepts live `Pea` and `Spike` projectiles mid-flight and replaces them with upgraded variants (fire → plasma chain).

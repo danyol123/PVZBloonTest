@@ -1,8 +1,8 @@
 namespace PVZBloonTest.Events
 {
-    public class SweetDreamsEvent : EventWave
+    public class SweetDreamsEvent : IEventWave
     {
-        public override string Name => "Sweet Dreams!";
-        public override void Trigger(GameContext ctx, Difficulty diff) => ctx.IsNightMode = true;
+        public string Name => "Sweet Dreams!";
+        public void Trigger(GameContext ctx, Difficulty diff) => ctx.IsNightMode = true;
     }
 }

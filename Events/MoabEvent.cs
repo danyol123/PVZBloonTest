@@ -1,10 +1,10 @@
 using PVZBloonTest.Bloons;
 namespace PVZBloonTest.Events
 {
-    public class MoabEvent : EventWave
+    public class MoabEvent : IEventWave
     {
-        public override string Name => "M.O.A.B.!";
-        public override void Trigger(GameContext ctx, Difficulty diff)
+        public string Name => "M.O.A.B.!";
+        public void Trigger(GameContext ctx, Difficulty diff)
         {
             float bx = Constants.GRID_X + Constants.GRID_COLS * Constants.CELL_W + 30f;
             ctx.BloonsToAdd.Add(new MoabBloon(2, bx));

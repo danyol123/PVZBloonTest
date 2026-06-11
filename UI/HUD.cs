@@ -9,10 +9,10 @@ namespace PVZBloonTest.UI
 
         private static readonly (PlantType Type, string Label, int Cost, float Cooldown)[] Cards = new[]
         {
-            (PlantType.Sunflower,  "Sunflower",  50,   5f),
-            (PlantType.Peashooter, "Peashooter", 100,  5f),
-            (PlantType.Wallnut,    "Wallnut",    50,  15f),
-            (PlantType.Cactus,     "Cactus",     150,  5f),
+            (PlantType.Sunflower,  "Sunflower",  50,   0f),
+            (PlantType.Peashooter, "Peashooter", 100,  0f),
+            (PlantType.Wallnut,    "Wallnut",    50,  0f),
+            (PlantType.Cactus,     "Cactus",     150,  0f),
         };
 
         private readonly float[] _cdTimers = new float[4];

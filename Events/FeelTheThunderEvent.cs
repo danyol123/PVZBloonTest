@@ -1,10 +1,10 @@
 using System.Linq;
 namespace PVZBloonTest.Events
 {
-    public class FeelTheThunderEvent : EventWave
+    public class FeelTheThunderEvent : IEventWave
     {
-        public override string Name => "Feel the Thunder!";
-        public override void Trigger(GameContext ctx, Difficulty diff)
+        public string Name => "Feel the Thunder!";
+        public void Trigger(GameContext ctx, Difficulty diff)
         {
             int   strikes = diff == Difficulty.Hard ? 5 : 3;
             float damage  = diff == Difficulty.Hard ? 100f : 50f;

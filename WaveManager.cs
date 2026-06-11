@@ -17,7 +17,7 @@ namespace PVZBloonTest
         private bool  _pendingInstantSpawn = false;
         private bool[] _eventFired;
         private bool   _roundComplete = false;
-        private readonly List<EventWave> _pool = new();
+        private readonly List<IEventWave> _pool = new();
         private readonly HashSet<string> _used = new();
         private readonly Random          _rng  = new();
 
@@ -68,19 +68,19 @@ namespace PVZBloonTest
                     _totalWaves = 2; _waveDuration = 90f;
                     _baseInterval = 7f; _minInterval = 1.5f;
                     _waveBudgets  = new[] { 50, 90 };
-                    _pool.AddRange(new EventWave[] { new SpeedyWindsEvent(), new ToughRubberEvent() });
+                    _pool.AddRange(new IEventWave[] { new SpeedyWindsEvent(), new ToughRubberEvent() });
                     break;
                 case Difficulty.Normal:
                     _totalWaves = 3; _waveDuration = 85f;
                     _baseInterval = 6f; _minInterval = 1.0f;
                     _waveBudgets  = new[] { 60, 110, 200 };
-                    _pool.AddRange(new EventWave[] { new SpeedyWindsEvent(), new ToughRubberEvent(), new AmbushEvent(), new FeelTheThunderEvent() });
+                    _pool.AddRange(new IEventWave[] { new SpeedyWindsEvent(), new ToughRubberEvent(), new AmbushEvent(), new FeelTheThunderEvent() });
                     break;
                 case Difficulty.Hard:
                     _totalWaves = 4; _waveDuration = 80f;
                     _baseInterval = 5f; _minInterval = 0.5f;
                     _waveBudgets  = new[] { 70, 150, 280, 450 };
-                    _pool.AddRange(new EventWave[] { new SpeedyWindsEvent(), new ToughRubberEvent(), new AmbushEvent(), new FeelTheThunderEvent(), new SweetDreamsEvent() });
+                    _pool.AddRange(new IEventWave[] { new SpeedyWindsEvent(), new ToughRubberEvent(), new AmbushEvent(), new FeelTheThunderEvent(), new SweetDreamsEvent() });
                     break;
                 default: // Showcase
                     _totalWaves = 2; _waveDuration = 60f;
@@ -413,7 +413,7 @@ namespace PVZBloonTest
             if (_diff == Difficulty.Hard && _currentSeg == _totalWaves - 1)
             { var mv = new MoabEvent(); mv.Trigger(ctx, _diff); SetNotification(ctx, mv.Name); return; }
 
-            var avail = new List<EventWave>();
+            var avail = new List<IEventWave>();
             foreach (var e in _pool) if (!_used.Contains(e.Name)) avail.Add(e);
             if (avail.Count == 0) return;
 

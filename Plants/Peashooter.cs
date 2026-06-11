@@ -56,6 +56,7 @@ namespace PVZBloonTest.Plants
                     { 
                         for (int rr = -1; rr <= 1; rr++) { FireRow(ctx, Row + rr); }
                         fired = true; 
+                        break;
                     }
                 }
             }
